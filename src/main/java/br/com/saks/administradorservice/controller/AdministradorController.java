@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Mohalk
  */
 @RestController
-@RequestMapping
+@RequestMapping("/administrador")
         
 public class AdministradorController {
     

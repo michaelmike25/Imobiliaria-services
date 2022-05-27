@@ -23,7 +23,7 @@ public class Administrador {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
         private String nome;
         
     @Column (nullable = false, unique = true, length = 200)
@@ -32,7 +32,7 @@ public class Administrador {
     @Column (nullable = false, length = 200)
         private String senha;
     
-    @Column(nullable = false)
+    @Column()
         private int status;
     
 }
