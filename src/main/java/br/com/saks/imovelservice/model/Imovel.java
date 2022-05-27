@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.saks.imovelservice.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
@@ -13,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import lombok.Data;
 
 /**
@@ -34,7 +30,7 @@ public class Imovel {
     @Column(nullable = false, length = 100)
         private String titulo;
     
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
         private String descricao;
     
     @Column(name="data_criacao") 
@@ -46,4 +42,7 @@ public class Imovel {
         
     @Column(nullable = false)
         private Integer status;
+    
+    @Transient // essa variavel esta vindo de outro micro serviço
+      TipoImovel tipoImovel;
 }
