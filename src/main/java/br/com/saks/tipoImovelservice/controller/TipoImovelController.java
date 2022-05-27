@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/tipo")
+@RequestMapping("/tipoImovel")
 
 public class TipoImovelController {
     
