@@ -1,3 +1,4 @@
+
 package br.com.saks.interesseservice.controller;
 
 import br.com.saks.interesseservice.model.Interesse;
@@ -16,11 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Mohalk
- */
-
 @RestController
 @RequestMapping("/interesse")
 public class InteresseController {
@@ -38,8 +34,7 @@ public class InteresseController {
     }
     
     
-    
-    @GetMapping(value = "/{idInteresse}/{idTipoimovel}")
+    @GetMapping(value = "/cliente/{idTipoimovel}")
     public Optional<Interesse> listarPeloInteresse(@PathVariable Long idInteresse, @PathVariable Long idTipoImovel) {
         final InteresseIdentity identity = new InteresseIdentity(idInteresse, idTipoImovel);
         return interesseRepository.findById(identity);
@@ -51,7 +46,7 @@ public class InteresseController {
         return interesseRepository.findByInteresseIdentityIdImovel(idImovel);
     }
     
-    
+    /*
     @GetMapping(value="/{id}")
         public Interesse listarPeloId(@PathVariable Long id) {
         Optional<Interesse> interesseResponse= interesseRepository.findByInteresseIdentityIdImovel(id);
@@ -59,7 +54,7 @@ public class InteresseController {
         interesse.setCliente(clienteService.listarPeloId(interesse.getInteresseIdentity().getIdInteresse())); // passando id do cliente
             return interesse;
         }
-    
+    */
     
     @PostMapping
     public Interesse adicionar(@RequestBody Interesse interesse) {
