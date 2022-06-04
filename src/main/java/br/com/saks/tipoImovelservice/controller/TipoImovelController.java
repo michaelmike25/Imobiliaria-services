@@ -2,6 +2,7 @@ package br.com.saks.tipoImovelservice.controller;
 
 import br.com.saks.tipoImovelservice.model.TipoImovel;
 import br.com.saks.tipoImovelservice.repository.TipoImovelRepository;
+import br.com.saks.tipoImovelservice.service.ImovelService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Mohalk
- */
 
 @RestController
 @RequestMapping("/tipoImovel")
@@ -28,6 +25,9 @@ public class TipoImovelController {
     
     @Autowired
         private TipoImovelRepository tipoImovelRepository;
+     
+    @Autowired
+    private ImovelService imovelService;
     
     @GetMapping
         public List<TipoImovel> listarTodos(){
@@ -39,6 +39,14 @@ public class TipoImovelController {
             return tipoImovelRepository.findById(id);
         }
        
+    @GetMapping(value="/imovel/{id}")
+        public TipoImovel listaImovelPelaId(@PathVariable Long id){
+            Optional<TipoImovel> tipoImovelResponse = tipoImovelRepository.findById(id);
+            TipoImovel tipoImovel = tipoImovelResponse.get();
+            tipoImovel.setImovel(imovelService.listarImovelPeloTipo(id));
+        return tipoImovel;
+    }
+        
     @PostMapping
         public TipoImovel adicionar (@RequestBody TipoImovel tipoImovel){
             return tipoImovelRepository.save(tipoImovel);
