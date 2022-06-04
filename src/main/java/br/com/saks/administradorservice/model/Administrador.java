@@ -7,12 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Data;
-import static org.hibernate.engine.jdbc.Size.length;
 
-/**
- *
- * @author Mohalk
- */
 
 @Entity
 @Data
