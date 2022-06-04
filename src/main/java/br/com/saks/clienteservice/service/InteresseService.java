@@ -1,4 +1,3 @@
-
 package br.com.saks.clienteservice.service;
 
 import br.com.saks.clienteservice.model.Interesse;

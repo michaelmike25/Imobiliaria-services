@@ -21,10 +21,6 @@ import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Mohalk
- */
 
 @RestController
 @RequestMapping("/cliente")
@@ -34,7 +30,7 @@ public class ClienteController {
     @Autowired
         private ClienteRepository clienteRepository;
     
-    @GetMapping
+    @GetMapping // listar 
         public List<Cliente> listarTodos(){
             return clienteRepository.findAll();
         }
@@ -79,7 +75,7 @@ public class ClienteController {
                     return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
-    //hash
+    //hash criptografia da senha
     public static String createHash(String pass) throws NoSuchAlgorithmException{
         String passwordToHash = pass;
         String salt = getSalt();
