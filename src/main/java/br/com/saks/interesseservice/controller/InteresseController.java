@@ -1,10 +1,10 @@
-
 package br.com.saks.interesseservice.controller;
 
 import br.com.saks.interesseservice.model.Interesse;
 import br.com.saks.interesseservice.model.InteresseIdentity;
 import br.com.saks.interesseservice.repository.InteresseRepository;
 import br.com.saks.interesseservice.service.ClienteService;
+import br.com.saks.interesseservice.service.ImovelService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,14 @@ public class InteresseController {
     @Autowired
         private ClienteService clienteService;
     
-    
+     @Autowired
+    private ImovelService imovelService;
+     
     @GetMapping
     public List<Interesse> listarTodos() {
         return interesseRepository.findAll();
     }
-    
+   
     
     @GetMapping(value = "/cliente/{idTipoimovel}")
     public Optional<Interesse> listarPeloInteresse(@PathVariable Long idInteresse, @PathVariable Long idTipoImovel) {
@@ -46,15 +48,14 @@ public class InteresseController {
         return interesseRepository.findByInteresseIdentityIdImovel(idImovel);
     }
     
-    /*
-    @GetMapping(value="/{id}")
-        public Interesse listarPeloId(@PathVariable Long id) {
-        Optional<Interesse> interesseResponse= interesseRepository.findByInteresseIdentityIdImovel(id);
-        Interesse interesse= interesseResponse.get();
-        interesse.setCliente(clienteService.listarPeloId(interesse.getInteresseIdentity().getIdInteresse())); // passando id do cliente
-            return interesse;
-        }
-    */
+    @GetMapping(value="/imovel/{idImovel}")
+    public List<Interesse> listarClientePeloId(@PathVariable Long idImovel) {
+        List<Interesse> interesseResponse = interesseRepository.findByInteresseIdentityIdImovel(idImovel);
+        for(Interesse interesse: interesseResponse){
+            interesse.setCliente(clienteService.listarPeloId(interesse.getInteresseIdentity().getIdCliente()));
+        }    
+        return interesseResponse;
+    }
     
     @PostMapping
     public Interesse adicionar(@RequestBody Interesse interesse) {
