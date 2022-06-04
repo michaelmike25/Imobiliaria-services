@@ -3,6 +3,7 @@ package br.com.saks.imovelservice.controller;
 
 import br.com.saks.imovelservice.model.Imovel;
 import br.com.saks.imovelservice.repository.ImovelRepository;
+import br.com.saks.imovelservice.service.InteresseService;
 import br.com.saks.imovelservice.service.TipoImovelService;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,9 @@ public class ImovelController {
     @Autowired
     private TipoImovelService tipoImovelService;
     
+   @Autowired
+    private InteresseService interesseService;
+    
     @GetMapping
     public List<Imovel> listarTodos() {
         return imovelRepository.findAll();
@@ -37,9 +41,37 @@ public class ImovelController {
     public Imovel listarPeloId(@PathVariable Long id) {
         Optional <Imovel> imovelResponse = imovelRepository.findById(id);
         Imovel imovel = imovelResponse.get();
+        if(imovel.getStatus()==0){
+            return null;
+        }        
         imovel.setTipoImovel(tipoImovelService.ListarPeloId(imovel.getIdTipoImovel()));
         return imovel;
         
+    }
+    
+    @GetMapping(value="/tipoImovel/{idTipoImovel}")
+    public List<Imovel> listarImovelPeloTipo(@PathVariable Long idTipoImovel){
+        List<Imovel> imovelResponse = new ArrayList<Imovel>();
+        for(Imovel imovel :imovelRepository.findAll()){
+        if(imovel.getIdTipoImovel().equals(idTipoImovel) && imovel.getStatus()==1){
+            imovelResponse.add(imovel);
+            }
+        }        
+        return imovelResponse;
+    }
+    
+    
+@GetMapping(value="/interesse/{id}")
+    public Imovel listarClientePeloId(@PathVariable Long id) {
+        Optional<Imovel> clienteResponse = imovelRepository.findById(id);
+        Imovel imovel = clienteResponse.get();
+        if(imovel.getStatus() ==0 ){
+            return null;
+        }
+        imovel.setTipoImovel(tipoImovelService.ListarPeloId(imovel.getIdTipoImovel()));
+        imovel.setInteresse(interesseService.listarClientePeloId(id));
+    
+        return imovel;
     }
     
     @PostMapping
@@ -51,18 +83,23 @@ public class ImovelController {
     public ResponseEntity editar(@PathVariable Long id, @RequestBody Imovel imovel) {
         return imovelRepository.findById(id)
                 .map(record -> {
-                    record.setStatus(imovel.getStatus());
+                    record.setTitulo(imovel.getTitulo());
+                    record.setDataCriado(imovel.getDataCriado());
+                    record.setDescricao(imovel.getDescricao());
+                    record.setStatus(1);
+                    record.setValor(imovel.getValor());
                     Imovel imovelUpdated = imovelRepository.save(record);
                     return ResponseEntity.ok().body(imovelUpdated);
                 }).orElse(ResponseEntity.notFound().build());
     }
     
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value="/{id}") // mudanca de exclusão por modificacao do status
     public ResponseEntity deletar(@PathVariable Long id) {
         return imovelRepository.findById(id)
                 .map(record-> {
-                    imovelRepository.deleteById(id);
-                    return ResponseEntity.ok().build();
+                    record.setStatus(0);
+                    Imovel imovelUpdate = imovelRepository.save(record);
+                    return ResponseEntity.ok().body(imovelUpdate);
                 }).orElse(ResponseEntity.notFound().build());
     }
 }

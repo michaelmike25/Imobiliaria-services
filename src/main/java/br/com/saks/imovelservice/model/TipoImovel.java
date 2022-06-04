@@ -1,11 +1,10 @@
-
 package br.com.saks.imovelservice.model;
-
 
 public class TipoImovel {
 
     private Long id;
-     private String nome;
+    private String nome;
+
     public Long getId() {
         return id;
     }

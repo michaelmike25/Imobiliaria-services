@@ -1,12 +1,14 @@
-
 package br.com.saks.imovelservice.model;
 
-/**
- *
- * @author Mohalk
- */
 public class Cliente {
 
+    private Long id;
+    private String nome;
+    private String email;
+    private String senha;
+    private String telefone;
+    private int status;
+    
     public Long getId() {
         return id;
     }
@@ -54,10 +56,5 @@ public class Cliente {
     public void setStatus(int status) {
         this.status = status;
     }
-    private Long id;
-     private String nome;
-     private String email;
-     private String senha;
-     private String telefone;
-     private int status;
+    
 }

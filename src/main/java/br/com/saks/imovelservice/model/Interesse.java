@@ -3,7 +3,10 @@ package br.com.saks.imovelservice.model;
 
 
 public class Interesse {
-
+     private Long idCliente;
+    private Long idImovel;
+    private Cliente cliente;
+    
     public Long getIdCliente() {
         return idCliente;
     }
@@ -27,8 +30,5 @@ public class Interesse {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    private Long idCliente;
-    private Long idImovel;
-    private Cliente cliente;
-    
+       
 }

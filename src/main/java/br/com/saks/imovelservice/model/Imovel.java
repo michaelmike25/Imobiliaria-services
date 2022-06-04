@@ -11,10 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import lombok.Data;
 
-/**
- *
- * @author Mohalk
- */
+
 @Entity
 @Data
 
@@ -43,6 +40,9 @@ public class Imovel {
     @Column(nullable = false)
         private Integer status;
     
-    @Transient // essa variavel esta vindo de outro micro serviço
+    @Transient // variavel vindo de outro micro serviço
       TipoImovel tipoImovel;
+    
+    @Transient// variavel vindo de outro micro serviço
+    Interesse[] interesse;
 }
