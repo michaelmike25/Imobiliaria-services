@@ -5,6 +5,7 @@ import br.com.saks.imovelservice.model.Imovel;
 import br.com.saks.imovelservice.repository.ImovelRepository;
 import br.com.saks.imovelservice.service.InteresseService;
 import br.com.saks.imovelservice.service.TipoImovelService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class ImovelController {
             return null;
         }
         imovel.setTipoImovel(tipoImovelService.ListarPeloId(imovel.getIdTipoImovel()));
-        imovel.setInteresse(interesseService.listarClientePeloId(id));
+        imovel.setInteresse(interesseService.);
     
         return imovel;
     }
